@@ -19,3 +19,7 @@ class Solution:
                 m_word += dic[chr(c) - chr('a')]
             out.append(m_word)
         return len(set(out))
+
+
+s = Solution()
+s.uniqueMorseRepresentations(["hello", "world"])
