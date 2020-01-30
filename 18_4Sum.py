@@ -74,3 +74,14 @@ class Solution:
             results = []
             findNsum(sotred(nums), target, 4, [], results)
             return results
+
+"""
+findNsum(sorted(nums) = [-2, -1, 0, 0, 1, 2], target = 0, N = 4, result = [], results = [])
+i: 0 findNsum:  nums[i+1:]:  [-1, 0, 0, 1, 2]  target-nums[i]:  2  N-1:  3  result+[nums[i]]:  [-2]  results: []
+i: 0 findNsum:  nums[i+1:]:  [0, 0, 1, 2]  target-nums[i]:  3  N-1:  2  result+[nums[i]]:  [-2, -1]  results: []
+i: 1 findNsum:  nums[i+1:]:  [0, 1, 2]  target-nums[i]:  2  N-1:  2  result+[nums[i]]:  [-2, 0]  results: [[-2, -1, 1, 2]]
+i: 1 findNsum:  nums[i+1:]:  [0, 0, 1, 2]  target-nums[i]:  1  N-1:  3  result+[nums[i]]:  [-1]  results: [[-2, -1, 1, 2], [-2, 0, 0, 2]]
+i: 0 findNsum:  nums[i+1:]:  [0, 1, 2]  target-nums[i]:  1  N-1:  2  result+[nums[i]]:  [-1, 0]  results: [[-2, -1, 1, 2], [-2, 0, 0, 2]]
+i: 2 findNsum:  nums[i+1:]:  [0, 1, 2]  target-nums[i]:  0  N-1:  3  result+[nums[i]]:  [0]  results: [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
+i: 0 findNsum:  nums[i+1:]:  [1, 2]  target-nums[i]:  0  N-1:  2  result+[nums[i]]:  [0, 0]  results: [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
+"""
