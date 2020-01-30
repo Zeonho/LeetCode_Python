@@ -1,3 +1,5 @@
+package Java;
+
 enum Result {
     TRUE, FALSE
 }
