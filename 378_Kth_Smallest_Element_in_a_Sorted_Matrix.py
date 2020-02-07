@@ -70,3 +70,4 @@ class Solution:
             if len(row) > i + 1
                 heappush(minHeap, (row[i+1], i+1, row))
         return number
+
