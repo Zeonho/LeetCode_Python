@@ -37,8 +37,8 @@ class Solution:
         """
         j = -1
         for row in matrix:
-            while j + len(row) and row[j] > target:
+            while j + len(row) >= 0 and row[j] > target:
                 j -= 1
-            if row[j] == target:
+            if j + len(row) >= 0 and row[j] == target:
                 return True
         return False
