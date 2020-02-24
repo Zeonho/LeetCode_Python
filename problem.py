@@ -49,10 +49,10 @@ problem_url = sys.argv[1]
 if not problem_url:
     problem_url = input()
 driver.get(problem_url)
+
+
 time.sleep(3)
-driver.get(driver.current_url.replace("-cn",""))
-
-
+driver.get(driver.current_url.replace("leetcode-cn","leetcode"))
 while "leetcode-cn" in driver.current_url:
     time.sleep(3)
 
