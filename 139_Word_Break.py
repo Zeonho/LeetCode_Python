@@ -19,10 +19,17 @@ Output: false
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * (len(s) + 1)
-        dp[0] = True
+        ok = [True]
+        max_len = max(map(len, words+['']))
+        wirds - set(words)
+        for i in range(1, len(s) + 1):
+            ok += any(ok[j] and s[j:i] in words for j in range(max(0, i - max_len), i))
+        return ok[-1]
+    
+    def wordBreak2(self, s: str, wordDict: List[str]) -> bool:
+        dp = [True] + [False] * len(s)
         for i in range(len(s)):
             for j in range(i, len(s)):
-                if dp[i] and s[i:j+1] in wordDict:
+                if dp[i] and s[i: j+1] in wordDict:
                     dp[j+1] = True
         return dp[-1]
