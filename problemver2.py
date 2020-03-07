@@ -10,10 +10,10 @@ import time
 
 class Question_Parser:
     def __init__(self):
-        self.self.self.driver = Chrome()
+        self.driver = Chrome()
         
 
-        # self.self.driver.implicitly_wait(20)
+        # self.driver.implicitly_wait(20)
 
         # Login
         self.login_option = False
@@ -26,7 +26,7 @@ class Question_Parser:
         if not self.problem_url:
             self.problem_url = input()
 
-        self.self.driver.get(problem_url)
+        self.driver.get(self.problem_url)
 
         # Stupid Leetcode CN 
         time.sleep(3)
@@ -50,14 +50,14 @@ class Question_Parser:
 
 
         if USERNAME and PASSWORD:
-            self.self.driver.get(login_url)
+            self.driver.get(self.login_url)
             
-            username_field = self.self.driver.find_elements_by_class_name("input__2W4f")[0]
-            password_field = self.self.driver.find_elements_by_class_name("input__2W4f ")[1]
+            username_field = self.driver.find_elements_by_class_name("input__2W4f")[0]
+            password_field = self.driver.find_elements_by_class_name("input__2W4f ")[1]
             username_field.send_keys(USERNAME)
             password_field.send_keys(PASSWORD)
 
-            signin = self.self.driver.find_element_by_class_name("btn-content__lOBM")
+            signin = self.driver.find_element_by_class_name("btn-content__lOBM")
             flag = True
 
             while(flag):
@@ -68,7 +68,7 @@ class Question_Parser:
                 except WebDriverException:
                     time.sleep(0.5)
             time.sleep(1)
-            if(self.self.driver.current_url != login_url):
+            if(self.driver.current_url != self.login_url):
                 print('Login succeeded')
                 return True
             else:
@@ -92,7 +92,7 @@ class Question_Parser:
                 try_times += 1
 
             if try_times == 5:
-                self.self.driver.get(problem_url)
+                self.driver.get(self.problem_url)
 
                 # Stupid Leetcode CN 
                 time.sleep(3)
@@ -124,7 +124,7 @@ class Question_Parser:
                     try_times += 1
 
                 if try_times == 5:
-                    self.self.driver.get(problem_url)
+                    self.driver.get(self.problem_url)
 
                     # Stupid Leetcode CN 
                     time.sleep(3)
@@ -163,13 +163,13 @@ class Question_Parser:
                 try_times += 1
 
             if try_times == 5:
-                self.self.driver.get(problem_url)
+                self.driver.get(self.problem_url)
 
                 # Stupid Leetcode CN 
                 time.sleep(3)
                 self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
                 while "leetcode-cn" in self.driver.current_url:
-                time.sleep(2)
+                    time.sleep(2)
             elif try_times > 10:
                 print("Parsing starter code  fail")
                 return False
@@ -187,23 +187,23 @@ class Question_Parser:
 
     def create_file(self):
         try:
-        f_name = self.title
-        f_name = f_name.replace('.', '')
-        f_name = f_name.replace(' ', '_')
-        f_name += ".py"
-        f = open(f_name, "w")
+            f_name = self.title
+            f_name = f_name.replace('.', '')
+            f_name = f_name.replace(' ', '_')
+            f_name += ".py"
+            f = open(f_name, "w")
 
-        
-        if self.get_question_description and self.get_starter_code:
-            f.write(self.problem + "\n"+ self.starter_code)
+            
+            if self.get_question_description() and self.get_starter_code():
+                f.write(self.problem + "\n"+ self.starter_code)
 
 
-        print(f_name, " Created")
-    except IOError as e:
-        print (e)
-    finally:
-        f.close()
-        self.driver.close()
+            print(f_name, " Created")
+        except IOError as e:
+            print (e)
+        finally:
+            f.close()
+            self.driver.close()
 
 
     def run(self):
