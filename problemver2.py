@@ -83,13 +83,12 @@ class Question_Parser:
         try_times = 0
 
         while not success:
-            
+            try_times += 1
             try:
                 self.title = self.driver.find_element_by_class_name("css-v3d350").text
+                success = True
             except WebDriverException:
                 time.sleep(0.5)
-            finally:
-                try_times += 1
 
             if try_times == 5:
                 self.driver.get(self.problem_url)
@@ -106,37 +105,30 @@ class Question_Parser:
         return success
 
 
-        def get_question_description(self):
+    def get_question_description(self):
 
-            success = False
-            try_times = 0
-            doc_mark = '"""'
-            new_line_mark = "\n"
+        success = False
+        try_times = 0
+        doc_mark = '"""'
+        new_line_mark = "\n"
 
-            while not success:
+        while not success:
+            try_times += 1
+            try:
+                content = self.driver.find_element_by_class_name("question-content__JfgR").text
+                success = True
+            except WebDriverException:
+                time.sleep(0.5)
+            
+            if try_times > 10:
+                print("Parsing question content fail")
+                return False
                 
-                try:
-                    content = self.driver.find_element_by_class_name("question-content__JfgR").text
-       
-                except WebDriverException:
-                    time.sleep(0.5)
-                finally:
-                    try_times += 1
 
-                if try_times == 5:
-                    self.driver.get(self.problem_url)
+            
 
-                    # Stupid Leetcode CN 
-                    time.sleep(3)
-                    self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
-                    while "leetcode-cn" in self.driver.current_url:
-                        time.sleep(2)
-                elif try_times > 10:
-                    print("Parsing question content fail")
-                    return False
-
-            self.problem = doc_mark + new_line_mark + content + new_line_mark  + doc_mark + new_line_mark
-            return success
+        self.problem = doc_mark + new_line_mark + content + new_line_mark  + doc_mark + new_line_mark
+        return success
 
     def get_starter_code(self):
 
@@ -147,7 +139,7 @@ class Question_Parser:
         new_line_mark = "\n"
 
         while not success:
-            
+            try_times += 1
             try:
                 # Obtain starter code
                 language_dropdown = '//*[@id="app"]/div/div[3]/div/div/div[3]/div/div[1]/div/div[1]/div[1]/div'
@@ -156,21 +148,12 @@ class Question_Parser:
                 self.driver.find_element_by_xpath(language_dropdown).click()
                 self.driver.find_element_by_xpath(python3_option).click()
                 time.sleep(1)
-    
+                success = True    
             except WebDriverException:
                 time.sleep(0.5)
-            finally:
-                try_times += 1
+                
 
-            if try_times == 5:
-                self.driver.get(self.problem_url)
-
-                # Stupid Leetcode CN 
-                time.sleep(3)
-                self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
-                while "leetcode-cn" in self.driver.current_url:
-                    time.sleep(2)
-            elif try_times > 10:
+            if try_times > 10:
                 print("Parsing starter code  fail")
                 return False
 
@@ -187,11 +170,12 @@ class Question_Parser:
 
     def create_file(self):
         try:
-            f_name = self.title
-            f_name = f_name.replace('.', '')
-            f_name = f_name.replace(' ', '_')
-            f_name += ".py"
-            f = open(f_name, "w")
+            if self.get_title():
+                f_name = self.title
+                f_name = f_name.replace('.', '')
+                f_name = f_name.replace(' ', '_')
+                f_name += ".py"
+                f = open(f_name, "w")
 
             
             if self.get_question_description() and self.get_starter_code():
@@ -207,7 +191,6 @@ class Question_Parser:
 
 
     def run(self):
-        self.get_title()
         self.create_file()
             
 
