@@ -26,8 +26,6 @@ class Solution:
             else:
                 low = mid + 1
 
-            print(high, low)
-
         
         return low
 
