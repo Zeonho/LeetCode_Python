@@ -14,30 +14,33 @@ class Solution:
     
     # binary scan
     # returns leftmost (or rightmost) index at which 'target' should be inserted in sorted array 'num' via binary search
-    def extreme_insertion_index(self, nums, target, left):
-        lo = 0
-        hi = len(nums)
+    def extreme_insertion_index(self, nums, target, leftmost):
+        low = 0
+        high = len(nums)
 
-        while lo < hi:
-            mid = (lo + hi) // 2
-            if nums[mid] > target or (left and target == nums[mid]):
-                hi = mid
-                print("hi = ", hi)
+        while low < high:
+            mid = (low + high)  // 2
+
+            if nums[mid] > target or (leftmost == True and nums[mid] == target):
+                high = mid
             else:
-                lo = mid + 1
+                low = mid + 1
+
+            print(high, low)
+
+        
+        return low
 
 
-        return lo
 
 
     
     
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         left_idx = self.extreme_insertion_index(nums, target, True)
-
+        
         # assert that 'left_idx' is within the array bounds and that 'target' is actually in 'nums'
         if left_idx == len(nums) or nums[left_idx] != target:
-            return [-1, -1]
-
+            return[-1, -1]
 
         return [left_idx, self.extreme_insertion_index(nums, target, False) - 1]
