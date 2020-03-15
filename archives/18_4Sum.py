@@ -67,12 +67,12 @@ class Solution:
                         else:
                             r -= 1
                 else:
-                    for i in range(len(nuums) - N + 1):
+                    for i in range(len(nums) - N + 1):
                         if i ==0 or (i > 0 and nums[i - 1] != nums[i]):
                             findNsum(nums[i+1:], target - nums[i], N - 1, result + [nums[i]], results)
                 
             results = []
-            findNsum(sotred(nums), target, 4, [], results)
+            findNsum(sorted(nums), target, 4, [], results)
             return results
 
 """
