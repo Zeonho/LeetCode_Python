@@ -32,12 +32,82 @@ def partition2(arr, low, high):
     return (i + 1)
 
 
+def partition3(arr, low, high):
+
+    middle = (low + high) // 2
+    pivot = arr[middle]  #  pivot
+    
+
+    left = low
+    right = high
+    l = len(arr)
+
+    while left < right:
+        while left < l and arr[left] < pivot:
+            left += 1
+        while right >= 0 and arr[right]  > pivot:
+            right -= 1
+        
+        arr[left], arr[right] = arr[right], arr[left]
+
+    return middle
+
+def partition4(array, start, end):
+    pivot = array[start]
+    low = start + 1
+    high = end
+
+    while True:
+        # If the current value we're looking at is larger than the pivot
+        # it's in the right place (right side of pivot) and we can move left,
+        # to the next element.
+        # We also need to make sure we haven't surpassed the low pointer, since that
+        # indicates we have already moved all the elements to their correct side of the pivot
+        
+        # Opposite process of the one above
+        while low <= high and array[low] <= pivot:
+            low = low + 1
+        
+        while low <= high and array[high] >= pivot:
+            high = high - 1
+
+        
+
+        # We either found a value for both high and low that is out of order
+        # or low is higher than high, in which case we exit the loop
+        if low <= high:
+            array[low], array[high] = array[high], array[low]
+            # The loop continues
+        else:
+            # We exit out of the loop
+            break
+
+    array[start], array[high] = array[high], array[start]
+
+    return high
+
+def partition5(array, left, right):
+    pivot = array[(left + right) // 2]
+    while left <= right:
+        while array[left] < pivot:
+            left += 1
+        while array[right]  > pivot:
+            right -= 1
+
+        if left <= right :
+            array[left], array[right] = array[right], array[left]
+            left += 1
+            right -= 1
+    return left
+
 # The main function that implements QuickSort
 # arr[] --> Array to be sorted,
 # low --> Starting index,
 # high --> Ending index
 # 10 80 30 70 40 50 90
-
+"""
+9 7 3
+"""
 
 #Fnction to do Quick sort
 def quickSort(arr, low, high):
@@ -45,22 +115,43 @@ def quickSort(arr, low, high):
 
         #  pi is partitioning index, arr[p] is now
         # at right place
-        pi = partition2(arr, low, high)
+        pi = partition5(arr, low, high)
 
         # Separately sort elements before
         # partition and after partition
         quickSort(arr, low, pi - 1)
-        quickSort(arr, pi + 1, high)
+        quickSort(arr, pi - 1, high)
+
+def quickSort1(arr, low, high):
+    if low < high:
+
+
+        pi = partition5(arr, low, high)
+        quickSort1(arr, low, pi - 1)
+        quickSort1(arr, pi, high)
+
+
+def quickSort2(array, left, right):
+    if  left >= right:
+        return
+    
+    index = partition5(array, left, right)
+    quickSort2(array, left, index - 1)
+    quickSort2(array, index, right)
 
 
 # Test code
 arr = [10, 7, 8, 9, 1, 5, 4, 6]
 # arr = [10, 7, 8]
 n = len(arr)
-quickSort(arr, 0, n -1)
+quickSort1(arr, 0, n -1)
 print("Sorted array is: ", end = "")
 print(arr)
 
+
+# arr = [1, 7, 8, 1, 10]
+# partition5(arr, 0, len(arr) - 1)
+# print(arr, len(arr) // 2)
 
 # Analysis of QuciSort
 """
