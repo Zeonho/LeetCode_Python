@@ -29,8 +29,10 @@ class Solution(object):
             # 1, pop buildings that are already ended
             # 2, if it's the start-building event, make the building alive
             # 3, if previous keypoint height != current highest height, edit the result
-            while live[0][1] <= pos: heappop(live)
-            if negH: heappush(live, (negH, R))
+            while live[0][1] <= pos: 
+                heappop(live)
+            if negH: 
+                heappush(live, (negH, R))
             if res[-1][1] != -live[0][0]:
                 res += [ [pos, -live[0][0]] ]
         return res[1:]
