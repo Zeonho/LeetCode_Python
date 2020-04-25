@@ -77,6 +77,13 @@ class Question_Parser:
         print('Need to provide a username and password!')
         return False
 
+    def stupid_leetcodeCN_handler(self):
+        # Stupid Leetcode CN 
+        time.sleep(3)
+        self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
+        while "leetcode-cn" in self.driver.current_url:
+            time.sleep(2)
+    
     def get_title(self):
 
         success = False
@@ -93,11 +100,7 @@ class Question_Parser:
             if try_times == 5:
                 self.driver.get(self.problem_url)
 
-                # Stupid Leetcode CN 
-                time.sleep(3)
-                self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
-                while "leetcode-cn" in self.driver.current_url:
-                    time.sleep(2)
+                
             elif try_times > 10:
                 print("Parsing title fail")
                 return False
