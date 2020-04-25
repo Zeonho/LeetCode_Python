@@ -12,28 +12,18 @@ class Question_Parser:
     def __init__(self):
         self.driver = Chrome()
         
-
-        # self.driver.implicitly_wait(20)
-
         # Login
         self.login_option = False
         self.login_url = 'https://leetcode.com/accounts/login/'
         self.login_account_file = ""
 
-
         # Problem
-        self.problem_url = sys.argv[1]
-        if not self.problem_url:
-            self.problem_url = input()
+        # self.problem_url = sys.argv[1]
+        # if not self.problem_url:
+        #     self.problem_url = input()
 
-        self.driver.get(self.problem_url)
-
-        # Stupid Leetcode CN 
-        time.sleep(3)
-        self.driver.get(self.driver.current_url.replace("leetcode-cn","leetcode"))
-        while "leetcode-cn" in self.driver.current_url:
-            time.sleep(2)
-
+        # self.driver.get(self.problem_url)
+        self.get_problem_url(sys.argv[1])
 
         # title is obtained by get_title function
         self.title = ""
@@ -41,6 +31,15 @@ class Question_Parser:
         self.problem = ""
         # title is obtained by get_starter_code function
         self.starter_code =""
+
+    def get_problem_url(self, number):
+        problem_serach_url = "https://leetcode.com/problemset/all/?search="
+        problem_serach =  problem_serach_url + number
+        self.driver.get(problem_serach)
+        time.sleep(2)
+        a_href = self.driver.find_element_by_xpath("//table/tbody[1]/tr/td[3]/div/a")
+        time.sleep(0.5)
+        a_href.click()
 
     def login(self):
 
@@ -146,9 +145,11 @@ class Question_Parser:
             try:
                 # Obtain starter code
                 language_dropdown = '//*[@id="app"]/div/div[3]/div/div/div[3]/div/div[1]/div/div[1]/div[1]/div'
+                select_arrow = self.driver.find_element_by_class_name('ant-select-arrow')
                 time.sleep(1)
                 python3_option = '/html/body/div[7]/div/div/div/ul/li[4]'
-                self.driver.find_element_by_xpath(language_dropdown).click()
+                # self.driver.find_element_by_xpath(language_dropdown).click()
+                select_arrow.click()
                 self.driver.find_element_by_xpath(python3_option).click()
                 time.sleep(1)
                 success = True    
