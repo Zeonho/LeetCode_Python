@@ -24,3 +24,30 @@ class Solution:
         
         return strs[0]
 
+    def longestCommonPrefix2(self, strs: List[str]) -> str:
+        def longestCommonPrefix(strs,  l,  r) :
+            if l == r:
+                return strs[l]
+            else:
+                mid = (l + r)/2
+                lcpLeft = longestCommonPrefix(strs, l , mid)
+                lcpRight = longestCommonPrefix(strs, mid + 1,r)
+                return commonPrefix(lcpLeft, lcpRight)
+   
+
+
+        def commonPrefix(left, right):
+            minL = min(len(left), len(right));       
+            for i in range(minL):
+                if left[i] != right[i]:
+                    return left[:i]
+            
+            return left.substring[:minL]
+
+
+        if strs == None or len(strs) == 0: return "";    
+        return longestCommonPrefix(strs, 0 , strs.length - 1)
+
+
+
+
