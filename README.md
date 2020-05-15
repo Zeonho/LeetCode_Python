@@ -66,9 +66,22 @@ https://sites.google.com/a/chromium.org/chromedriver/downloads
 
 ### Usage
 
-```
+```shell
 python3 make.py "question_url"
 ```
+
+```
+python3 make.py "question number"
+```
+
+
+
+
+
+### Next Revision:
+
+- Provide option for entering question number or question url
+- Seperate project
 
 
 
