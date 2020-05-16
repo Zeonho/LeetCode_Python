@@ -148,7 +148,6 @@ class Question_Parser:
                 select_arrow = self.driver.find_element_by_class_name('ant-select-arrow')
                 time.sleep(1)
                 python3_option = '/html/body/div[7]/div/div/div/ul/li[4]'
-                # self.driver.find_element_by_xpath(language_dropdown).click()
                 select_arrow.click()
                 self.driver.find_element_by_xpath(python3_option).click()
                 time.sleep(1)
